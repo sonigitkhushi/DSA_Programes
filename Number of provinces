@@ -1,0 +1,58 @@
+//{ Driver Code Starts
+import java.io.*;
+import java.util.*;
+
+class GFG {
+    public static void main(String args[]) throws IOException {
+        BufferedReader read =
+            new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(read.readLine());
+        while (t-- > 0) {
+            int V = Integer.parseInt(read.readLine());
+            
+            ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+            
+            for(int i=0; i<V; i++)
+            {
+                String S[] = read.readLine().split(" ");
+                ArrayList<Integer> temp = new ArrayList<>();
+                for(int j=0; j<V; j++)
+                    temp.add(Integer.parseInt(S[j]));
+                adj.add(temp);
+            }
+
+            Solution ob = new Solution();
+            System.out.println(ob.numProvinces(adj,V));
+        }
+    }
+}
+// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution {
+    static int numProvinces(ArrayList<ArrayList<Integer>> adj, int V) {
+        // code here
+        boolean[]visit=new boolean[V+1];
+        int pro=0;
+        Queue<Integer>q=new LinkedList<Integer>();
+        for(int i=1; i<=V; i++){
+            if(visit[i]!=true){
+                pro++;
+                q.add(i);
+                while(!q.isEmpty()){
+                    int node=q.poll();
+                    for(int j=0; j<adj.get(node-1).size();j++){
+                        if(adj.get(node-1).get(j)==1 && visit[j+1]!=true){
+                            visit[j+1]=true;
+                            q.add(j+1);
+                    }
+                }
+            }
+        }
+        
+    }
+    return pro;
+}
+}
